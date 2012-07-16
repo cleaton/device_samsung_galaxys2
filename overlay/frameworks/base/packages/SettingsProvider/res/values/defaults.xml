@@ -19,4 +19,6 @@
 <resources>
     <!-- Screen timeout default = 30 seconds -->
     <integer name="def_screen_off_timeout">30000</integer>
+	<!-- Enable Google Backup -->
+	<string name="def_backup_transport">com.google.android.backup/.BackupTransportService</string>
 </resources>

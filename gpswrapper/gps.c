@@ -60,7 +60,7 @@ static int load(const char *id,
     handle = dlopen(path, RTLD_NOW);
     if (handle == NULL) {
         char const *err_str = dlerror();
-        LOGE("load: module=%s\n%s", path, err_str?err_str:"unknown");
+        ALOGE("load: module=%s\n%s", path, err_str?err_str:"unknown");
         status = -EINVAL;
         goto done;
     }
@@ -69,14 +69,14 @@ static int load(const char *id,
     const char *sym = HAL_MODULE_INFO_SYM_AS_STR;
     hmi = (struct hw_module_t *)dlsym(handle, sym);
     if (hmi == NULL) {
-        LOGE("load: couldn't find symbol %s", sym);
+        ALOGE("load: couldn't find symbol %s", sym);
         status = -EINVAL;
         goto done;
     }
 
     /* Check that the id matches */
     if (strcmp(id, hmi->id) != 0) {
-        LOGE("load: id=%s != hmi->id=%s", id, hmi->id);
+        ALOGE("load: id=%s != hmi->id=%s", id, hmi->id);
         status = -EINVAL;
         goto done;
     }
@@ -94,7 +94,7 @@ static int load(const char *id,
             handle = NULL;
         }
     } else {
-        LOGV("loaded HAL id=%s path=%s hmi=%p handle=%p",
+        ALOGV("loaded HAL id=%s path=%s hmi=%p handle=%p",
                 id, path, *pHmi, handle);
     }
 
@@ -105,23 +105,23 @@ static int load(const char *id,
 
 static void update_network_state_wrapper(int connected, int type, int roaming, const char* extra_info)
 {
-    LOGI("%s was called and saved your from a faulty implementation ;-)", __func__);
+    ALOGI("%s was called and saved your from a faulty implementation ;-)", __func__);
 }
 
 static const void* wrapper_get_extension(const char* name)
 {
-    LOGV("%s was called", __func__);
+    ALOGV("%s was called", __func__);
     
     if (!strcmp(name, AGPS_RIL_INTERFACE) && (oldAGPSRIL = originalGpsInterface->get_extension(name)))
     {
-        LOGV("%s AGPS_RIL_INTERFACE extension requested", __func__);
+        ALOGV("%s AGPS_RIL_INTERFACE extension requested", __func__);
         /* use a wrapper to avoid calling samsungs faulty implemetation */        
         newAGPSRIL.size = sizeof(AGpsRilInterface);
         newAGPSRIL.init = oldAGPSRIL->init;
         newAGPSRIL.set_ref_location = oldAGPSRIL->set_ref_location;
         newAGPSRIL.set_set_id = oldAGPSRIL->set_set_id;
         newAGPSRIL.ni_message = oldAGPSRIL->ni_message;
-        LOGV("%s setting update_network_state_wrapper", __func__);
+        ALOGV("%s setting update_network_state_wrapper", __func__);
         newAGPSRIL.update_network_state = update_network_state_wrapper;
         return &newAGPSRIL;
     }
@@ -134,26 +134,26 @@ const GpsInterface* gps_get_gps_interface(struct gps_device_t* dev)
     hw_module_t* module;
     int err;
     
-	LOGV("%s was called", __func__);    
+	ALOGV("%s was called", __func__);    
     
     err = load(GPS_HARDWARE_MODULE_ID, ORIGINAL_HAL_PATH, (hw_module_t const**)&module);
         
     if (err == 0) {
-        LOGV("%s vendor lib loaded", __func__);
+        ALOGV("%s vendor lib loaded", __func__);
         hw_device_t* device;
         struct gps_device_t  *gps_device;
         err = module->methods->open(module, GPS_HARDWARE_MODULE_ID, &device);
         if (err == 0) {
-            LOGV("%s got gps device", __func__);
+            ALOGV("%s got gps device", __func__);
             gps_device = (struct gps_device_t *)device;            
             originalGpsInterface = gps_device->get_gps_interface(gps_device);            
-            LOGV("%s  device set", __func__);
+            ALOGV("%s  device set", __func__);
         }
     }    
 
     if(originalGpsInterface)
     {
-        LOGV("%s exposing callbacks", __func__); 
+        ALOGV("%s exposing callbacks", __func__); 
         newGpsInterface.size = sizeof(GpsInterface);
         newGpsInterface.init = originalGpsInterface->init;
         newGpsInterface.start = originalGpsInterface->start;
@@ -163,11 +163,11 @@ const GpsInterface* gps_get_gps_interface(struct gps_device_t* dev)
         newGpsInterface.inject_location = originalGpsInterface->inject_location;
         newGpsInterface.delete_aiding_data = originalGpsInterface->delete_aiding_data;
         newGpsInterface.set_position_mode = originalGpsInterface->set_position_mode;
-        LOGV("%s setting extension wrapper", __func__);
+        ALOGV("%s setting extension wrapper", __func__);
         newGpsInterface.get_extension = wrapper_get_extension;
 
     }
-    LOGV("%s done", __func__);
+    ALOGV("%s done", __func__);
     return &newGpsInterface;
 }
 
@@ -177,7 +177,7 @@ static int open_gps(const struct hw_module_t* module, char const* name,
     struct gps_device_t *dev = malloc(sizeof(struct gps_device_t));
     memset(dev, 0, sizeof(*dev));
 
-    LOGV("%s was called", __func__);
+    ALOGV("%s was called", __func__);
 
     dev->common.tag = HARDWARE_DEVICE_TAG;
     dev->common.version = 0;

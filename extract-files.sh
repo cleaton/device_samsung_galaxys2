@@ -79,9 +79,6 @@ adb pull /system/lib/egl/libEGL_mali.so ../../../vendor/$MANUFACTURER/$COMMON/pr
 adb pull /system/lib/egl/libGLES_android.so ../../../vendor/$MANUFACTURER/$COMMON/proprietary/libGLES_android.so
 adb pull /system/lib/egl/libGLESv1_CM_mali.so ../../../vendor/$MANUFACTURER/$COMMON/proprietary/libGLESv1_CM_mali.so
 adb pull /system/lib/egl/libGLESv2_mali.so ../../../vendor/$MANUFACTURER/$COMMON/proprietary/libGLESv2_mali.so
-adb pull /system/lib/libGLESv1_CM.so ../../../vendor/$MANUFACTURER/$COMMON/proprietary/libGLESv1_CM.so
-adb pull /system/lib/libGLESv2.so ../../../vendor/$MANUFACTURER/$COMMON/proprietary/libGLESv2.so
-adb pull /system/lib/libGLESv2_dbg.so ../../../vendor/$MANUFACTURER/$COMMON/proprietary/libGLESv2_dbg.so
 adb pull /system/lib/libion.so ../../../vendor/$MANUFACTURER/$COMMON/proprietary/libion.so
 adb pull /system/lib/libMali.so ../../../vendor/$MANUFACTURER/$COMMON/proprietary/libMali.so
 adb pull /system/lib/libUMP.so ../../../vendor/$MANUFACTURER/$COMMON/proprietary/libUMP.so
