@@ -242,9 +242,6 @@ PRODUCT_COPY_FILES += \\
     vendor/__MANUFACTURER__/__COMMON__/proprietary/libGLES_android.so:system/lib/egl/libGLES_android.so \\
     vendor/__MANUFACTURER__/__COMMON__/proprietary/libGLESv1_CM_mali.so:system/lib/egl/libGLESv1_CM_mali.so \\
     vendor/__MANUFACTURER__/__COMMON__/proprietary/libGLESv2_mali.so:system/lib/egl/libGLESv2_mali.so \\
-    vendor/__MANUFACTURER__/__COMMON__/proprietary/libGLESv1_CM.so:system/lib/libGLESv1_CM.so \\
-    vendor/__MANUFACTURER__/__COMMON__/proprietary/libGLESv2.so:system/lib/libGLESv2.so \\
-    vendor/__MANUFACTURER__/__COMMON__/proprietary/libGLESv2_dbg.so:system/lib/libGLESv2_dbg.so \\
     vendor/__MANUFACTURER__/__COMMON__/proprietary/libion.so:system/lib/libion.so \\
     vendor/__MANUFACTURER__/__COMMON__/proprietary/libMali.so:system/lib/libMali.so \\
     vendor/__MANUFACTURER__/__COMMON__/proprietary/libUMP.so:system/lib/libUMP.so
